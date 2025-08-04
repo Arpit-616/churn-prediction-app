@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Churn Prediction</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #fff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 500px;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+        font-weight: 300;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #fff;
+        font-size: 0.95rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      select option {
+        background: #2c2f4a;
+        color: #fff;
+      }
+
+      button {
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+      }
+
+      button:active {
+        transform: translateY(-1px);
+      }
+
+      .result {
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: 600;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .result.churn {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        color: #fff;
+      }
+
+      .result.no-churn {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: #fff;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .input-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 30px 20px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .input-group {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Churn Predictor</h1>
+      <form method="POST" action="/predict">
+        <div class="form-group">
+          <label for="contract">Contract Type</label>
+          <select name="contract" id="contract" required>
+            <option value="Month-to-month">Month-to-month</option>
+            <option value="One year">One year</option>
+            <option value="Two year">Two year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="tenure">Tenure (months)</label>
+          <input
+            type="number"
+            name="tenure"
+            id="tenure"
+            placeholder="Enter tenure in months"
+            value="0"
+            min="0"
+            max="72"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <div class="form-group">
+            <label for="monthly_charges">Monthly Charges ($)</label>
+            <input
+              type="number"
+              step="0.01"
+              name="monthly_charges"
+              id="monthly_charges"
+              placeholder="0.00"
+              value="0.00"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="total_charges">Total Charges ($)</label>
+            <input
+              type="number"
+              step="0.01"
+              name="total_charges"
+              id="total_charges"
+              placeholder="0.00"
+              value="0.00"
+              min="0"
+              required
+            />
+          </div>
+        </div>
+
+        <button type="submit">Predict Churn Risk</button>
+      </form>
+
+      {% if prediction_text %}
+      <div
+        class="result {% if 'High risk' in prediction_text or 'will churn' in prediction_text %}churn{% else %}no-churn{% endif %}"
+      >
+        {{ prediction_text }}
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
