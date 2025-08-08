@@ -16,8 +16,7 @@ A modern, responsive Flask web application for predicting customer churn using m
 - 📊 **Multiple Features** - Contract type, tenure, charges analysis
 
 ## 🚀 Live Demo
-
-[Try the live demo here](https://your-app-url.com) _(Add your deployed URL)_
+https://churn-prediction-app-87e0.onrender.com
 
 ## 📋 Prerequisites
 
@@ -29,7 +28,7 @@ A modern, responsive Flask web application for predicting customer churn using m
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/customer-churn-prediction.git
+   git clone https://github.com/Arpit-616/churn-prediction-app
    cd customer-churn-prediction
    ```
 
