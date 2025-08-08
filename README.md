@@ -2,9 +2,8 @@
 
 A modern, responsive Flask web application for predicting customer churn using machine learning. Features a beautiful glassmorphism UI design and real-time predictions.
 
-![Flask App](https://img.shields.io/badge/Flask-2.3.3-blue)
-![Python](https://img.shields.io/badge/Python-3.8+-green)
-![Machine Learning](https://img.shields.io/badge/ML-Random%20Forest-orange)
+<img width="1836" height="1013" alt="Screenshot 2025-08-05 003003" src="https://github.com/user-attachments/assets/8046d7c3-e32d-461f-b6a9-8d1e6a6e871f" />
+
 
 ## ✨ Features
 
